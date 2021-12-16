@@ -1,4 +1,4 @@
-# snowflake
+# Snowflake Python
 Main file : Snow.py
 Main can be used to call below functinality
 
