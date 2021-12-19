@@ -3,7 +3,8 @@
 import snowflake.connector,os,sys
 from propertyreader.propertyreader import propertyreader
 from snowconnect.snowconnect import Snow_Connect
-from loadintostage.loadintostage import Load_Into_Stage
+from loadintostage.loadintostage import Load_Into_Stage,Cleanup_Stage
+from snowpipe.snowpipe import create_ingester_manager
 import logging
 from datetime import datetime
 from logging import getLogger
@@ -16,8 +17,6 @@ logging.basicConfig(
 logger = getLogger()
 operation=sys.argv[1]
 
-
-
 if operation=='Read_Data':
     z=propertyreader(root,operation,logger)
     for x in z:
@@ -27,7 +26,19 @@ elif operation=='Load_Into_Stage':
     for x in z:
         k=x[0]
         v=x[1]
-        Load_Into_Stage(k,v,root,logger)        
-key_path=os.path.join(root,'key')
+        Load_Into_Stage(k,v,root,logger)
+elif operation=='Cleanup_Stage':
+    z=propertyreader(root,operation,logger)
+    for x in z:
+        k=x[0]
+        v=x[1]
+        Cleanup_Stage(k,v,root,logger)        
+elif operation=='Trigger_Pipe_Ingest':
+    z=propertyreader(root,operation,logger)
+    for x in z:
+        pipe=x[0]
+    create_ingester_manager(root,pipe)
+            
+
     
 

@@ -13,9 +13,16 @@ def propertyreader(root,operation,logger):
                     logger.info("Reading {} Section........".format(section))
                     logger.info(k+" : "+v)
                     kv_list.append([k,v])
-                    #Load_Into_Stage(k,v,data_path)
                 elif section=='Read_Data':
                     logger.info("Reading {} Section........".format(section))
                     logger.info(k+" : "+v)
                     kv_list.append(v)
+                elif section=='Trigger_Pipe_Ingest':
+                    logger.info("Reading {} Section........".format(section))
+                    logger.info(k+" : "+v)
+                    kv_list.append(v.split(":"))
+                elif section=='Cleanup_Stage':
+                    logger.info("Reading {} Section........".format(section))
+                    logger.info(k+" : "+v)
+                    kv_list.append([k,v])    
     return kv_list                
